@@ -18,28 +18,21 @@ resource "aws_cloudwatch_log_group" "main" {
     name = var.ecs_log_group_name
 }
 
-
-
-resource "aws_ecs_cluster_capacity_providers" "main" {
+resource "aws_ecs_cluster_capacity_providers" "main_spot" {
   cluster_name = aws_ecs_cluster.main.name
 
-  capacity_providers = ["FARGATE"]
+  capacity_providers = ["FARGATE_SPOT","FARGATE"]
 
   default_capacity_provider_strategy {
-    base              = 1
+    weight            = 50
+    capacity_provider = "FARGATE_SPOT"
+  }
+
+  default_capacity_provider_strategy {
     weight            = 50
     capacity_provider = "FARGATE"
   }
 }
 
-resource "aws_ecs_cluster_capacity_providers" "main_spot" {
-  cluster_name = aws_ecs_cluster.main.name
 
-  capacity_providers = ["FARGATE_SPOT"]
 
-  default_capacity_provider_strategy {
-    base              = 1
-    weight            = 50
-    capacity_provider = "FARGATE_SPOT"
-  }
-}
