@@ -18,9 +18,7 @@ resource "aws_cloudwatch_log_group" "main" {
     name = var.ecs_log_group_name
 }
 
-resource "aws_ecs_cluster" "example" {
-  name = "my-cluster"
-}
+
 
 resource "aws_ecs_cluster_capacity_providers" "main" {
   cluster_name = aws_ecs_cluster.main
