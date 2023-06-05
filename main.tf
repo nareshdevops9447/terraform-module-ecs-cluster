@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "main" {
      
       logging    = "OVERRIDE"
       log_configuration {
-        cloud_watch_log_group_name = aws_cloudwatch_log_group_name.main.name
+        cloud_watch_log_group_name = aws_cloudwatch_log_group.main.name
 
       }
 
@@ -21,7 +21,7 @@ resource "aws_cloudwatch_log_group" "main" {
 
 
 resource "aws_ecs_cluster_capacity_providers" "main" {
-  cluster_name = aws_ecs_cluster.main
+  cluster_name = aws_ecs_cluster.main.name
 
   capacity_providers = ["FARGATE"]
 
@@ -33,7 +33,7 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 }
 
 resource "aws_ecs_cluster_capacity_providers" "main_spot" {
-  cluster_name = aws_ecs_cluster.main
+  cluster_name = aws_ecs_cluster.main.name
 
   capacity_providers = ["FARGATE_SPOT"]
 
